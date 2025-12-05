@@ -1,0 +1,102 @@
+<!-- In this coding. I used Json and Local Storage to store the values in the
+ local storage. Even the page refresh does not affect the values. ALso included DOM for better interactive. -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>
+        Rock Paper Scissors
+    </title>
+</head>
+
+<body>
+
+    <h1>Rock Paper Scissors</h1>
+    <button onclick="play('Rock')" aria-label="Rock">Rock</button>
+    <button onclick="play('Paper')" aria-label="Paper">Paper</button>
+    <button onclick="play('Scissor')" aria-label="Scissor">Scissor</button>
+
+    <p class="decision"></p>
+    <p class="choices_made"></p>
+
+    <p class="scoreText">Wins : 0 Lose : 0 Ties: 0</p>
+
+    <button onclick="resetValue()">Reset Score</button>
+
+</body>
+
+<script>
+    
+    /*I used queryselector to select the <p> tag i want to change*/
+    let scoreText = document.querySelector('.scoreText');
+    let decision = document.querySelector('.decision');
+    let choices_made = document.querySelector('.choices_made');
+
+
+    /* Here we get the local storage value and changing that into object again.*/
+    let score = JSON.parse(localStorage.getItem('score'));
+
+    /*If my score is null after reset i am giving a new value to local storage.*/
+    if (score === null) {
+        score = {
+            wins: 0,
+            lose: 0,
+            ties: 0
+        }
+    }
+
+    function play(playerMove) {
+        const randomNumber = Math.round(Math.random() * 10);
+        let compMove = ' ';
+        if (randomNumber < 4) {
+            compMove = 'Rock';
+        }
+        else if (randomNumber > 3 && randomNumber < 7) {
+            compMove = 'Paper';
+        }
+        else {
+            compMove = 'Scissor';
+        }
+
+        let result = ' ';
+        if (compMove === playerMove) {
+            result = 'Tie.';
+            score.ties++;
+        }
+        else if (playerMove === 'Rock' && compMove === 'Scissor' || playerMove === 'Paper' && compMove === 'Rock' || playerMove === 'Scissor' && compMove === 'Paper') {
+            result = 'You Win.';
+            score.wins++;
+        }
+        else {
+            result = 'You Lost.';
+            score.lose++;
+        }
+        /*Local Storage Happens here. Converting object to JSON String and storing it in a local storage. */
+        localStorage.setItem('score', JSON.stringify(score));
+        
+        /* Instead of popup i used DOM and changed the <p> tag*/
+        scoreText.innerHTML = `Wins : ${score.wins}, Lose: ${score.lose}, Ties: ${score.ties}`;
+        
+        decision.innerText = result;
+
+        choices_made.innerText = `Yours : ${playerMove} | Computer: ${compMove};`
+    }
+
+    function resetValue() {
+        score.wins = 0;
+        score.lose = 0;
+        score.ties = 0;
+        /*Here i removed the local storage because if i don't it will return the same value
+        if i refresh after reset.*/
+        localStorage.removeItem('score');
+
+        /* Instead of popup i used DOM and changed the <p> tag*/
+        scoreText.innerHTML = `Wins : ${score.wins}, Lose: ${score.lose}, Ties: ${score.ties}`;
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,74 @@
+<!-- In this code i am using DOM Methods and properties to make the webpage interactive-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        DOM Manipulation
+    </title>
+</head>
+
+<body>
+
+    <p>Youtube Subscribe Button</p>
+    <button class="btn1" onclick="action()">Subscribe</button>
+
+    <br><br><br>
+
+    <p>Rock Paper Scissor</p>
+    <a href="r-p-s_with_DOM.html">Click Here</a>
+
+    <br><br><br>
+
+    <p>Amazon Shipping Calculator</p>
+    <p>Orders under $40 = +$10 shipping.</p>
+    <p>Orders over $40 = FREE shipping.</p>
+
+    <!--Used onkeydown to make the input box to do the task even the enter button clicked.-->
+    <input type="text" placeholder="Enter cost of order here" class="inputBox" onkeydown="actionOnEnter(event)">
+
+    <button onclick="orderCalculation()">Calculate</button>
+    <p class="finalOrderValue"></p>
+
+
+    <script>
+        let button1 = document.querySelector('.btn1');
+        let inputBox = document.querySelector('.inputBox');
+        let finalOrderValue = document.querySelector('.finalOrderValue');
+
+        /*Here i used innerText instead of innerHTML because innerHTML will get both tag and text and it will make mistake
+        while it have a whitespaces. so innerText get only text content of the html tag.*/
+        function action() {
+            if (button1.innerText === 'Subscribe') {
+                button1.innerText = 'Subscribed';
+            }
+            else {
+                button1.innerText = 'Subscribe';
+            }
+        }
+
+        function orderCalculation(){
+            if(inputBox.value <= 40){
+                finalOrderValue.innerText = `$${Number(inputBox.value)+10}`;
+            }
+            else if(inputBox.value > 40){
+                finalOrderValue.innerText = `$${inputBox.value}`;
+            }
+        }
+        /*This function for do task when enter button clicked on inputbox*/
+        function actionOnEnter(event){
+            if(event.key === 'Enter'){
+                if(inputBox.value <= 40){
+                finalOrderValue.innerText = `$${Number(inputBox.value)+10}`;
+            }
+            else if(inputBox.value > 40){
+                finalOrderValue.innerText = `$${inputBox.value}`;
+            }
+            }
+        }
+    </script>
+</body>
+
+</html>
