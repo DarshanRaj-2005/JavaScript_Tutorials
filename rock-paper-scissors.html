@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>
+        Rock Paper Scissors
+    </title>
+</head>
+
+<body>
+
+    <h1>Rock Paper Scissors</h1>
+    <button onclick="play('Rock')" aria-label="Rock"><i class="fa-solid fa-hand-back-fist"></i></button>
+    <button onclick="play('Paper')" aria-label="Paper"><i class="fa-solid fa-hand"></i></button>
+    <button onclick="play('Scissor')" aria-label="Scissor"><i class="fa-solid fa-scissors"></i></button>
+
+</body>
+
+<script>
+
+    function play(playerMove) {
+        const randomNumber = Math.round(Math.random() * 10);
+        let compMove = ' ';
+        if (randomNumber < 4) {
+            compMove = 'Rock';
+        }
+        else if (randomNumber > 3 && randomNumber < 7) {
+            compMove = 'Paper';
+        }
+        else {
+            compMove = 'Scissor';
+        }
+
+        let result = ' ';
+        if (compMove === playerMove) {
+            result = 'Tie.';
+        }
+        else if (playerMove === 'Rock' && compMove === 'Scissor' || playerMove === 'Paper' && compMove === 'Rock' || playerMove === 'Scissor' && compMove === 'Paper') {
+            result = 'You Win.';
+        }
+        else {
+            result = 'You Lost.';
+        }
+
+        alert(`Your choice is ${playerMove}. Computer choice is ${compMove}. ${result}`);
+    }
+
+</script>
+
+<style>
+    body{
+        background-color: black;
+    }
+    h1{
+        color: wheat;
+        text-align: center;
+    }
+    button {
+        padding: 50px;
+        border: 5px solid white;
+        background-color: rgb(161, 103, 213);
+        border-radius: 100%;
+        margin-top: 50px;
+        margin-left: 260px;
+
+    }
+
+    .fa-hand-back-fist {
+        font-size: 50px;
+        color: white;
+    }
+
+    .fa-hand {
+        font-size: 50px;
+        color: white;
+    }
+
+    .fa-scissors {
+        font-size: 50px;
+        color: white;
+    }
+</style>
+
+</html>
