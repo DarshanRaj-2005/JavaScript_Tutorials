@@ -1,0 +1,47 @@
+<!--It is the array practice and doing a simple to do list using array and for loop-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Array concepts
+    </title>
+</head>
+
+<body>
+    <!--Here the input values are stored in a array and displayed in console.-->
+    <h3>To Do List</h3>
+    <input type="text" placeholder="Enter a to do list here" class="inputBox1">
+    <button onclick="pushingList()">ADD</button>
+    <div class="result"></div>
+
+
+</body>
+
+<script>
+    let inputBox1 = document.querySelector('.inputBox1');
+    let result = document.querySelector('.result');
+
+    let myArray = [];
+
+    /*This add the elements into the array*/
+    function pushingList() {
+        myArray.push(inputBox1.value);
+        console.log(myArray);
+        inputBox1.value = '';
+
+        addingList();
+    }
+    /*This function to show the to do items one by one in the browser.*/
+    function addingList() {
+        let toDo = '';
+        for (let i = 0; i < myArray.length; i++) {
+            let html = `<p>${myArray[i]}</p>`;
+            toDo += html;
+        }
+        result.innerHTML = toDo;
+    }
+</script>
+</html>
