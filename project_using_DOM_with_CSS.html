@@ -1,0 +1,115 @@
+<!-- In this code i am using DOM Methods and properties to make the webpage interactive-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Project using DOM
+    </title>
+</head>
+
+<body>
+
+    <h3>Youtube Subscribe Button</h3>
+    <button class="btn1" onclick="action()">Subscribe</button>
+
+    
+    <h3>Amazon Shipping Calculator</h3>
+    <p>Orders under $40 = +$10 shipping.</p>
+    <p>Orders over $40 = FREE shipping.</p>
+
+    <!--Used onkeydown to make the input box to do the task even the enter button clicked.-->
+    <input type="text" placeholder="Enter cost of order here" class="inputBox" onkeydown="actionOnEnter(event)">
+
+    <button onclick="orderCalculation()" class="btn2">Calculate</button>
+    <p class="finalOrderValue"></p>
+    
+
+    <h3>Rock Paper Scissor</h3>
+    <a href="Rock-Paper-Scissor_complete_project.html">Click Here</a>
+
+
+    <script>
+        let button1 = document.querySelector('.btn1');
+        let inputBox = document.querySelector('.inputBox');
+        let finalOrderValue = document.querySelector('.finalOrderValue');
+
+        /*Here i used innerText instead of innerHTML because innerHTML will get both tag and text and it will make mistake
+        while it have a whitespaces. so innerText get only text content of the html tag.*/
+        function action() {
+            if (button1.innerText === 'Subscribe') {
+                button1.innerText = 'Subscribed';
+                /*ClassList is to add another class to a button for adding different css properties.*/
+                button1.classList.add('is-subscribed');
+            }
+            else {
+                button1.innerText = 'Subscribe';
+                button1.classList.remove('is-subscribed');
+            }
+        }
+
+        function orderCalculation(){
+            if(inputBox.value <= 40 && inputBox.value >0){
+                finalOrderValue.innerText = `$${Number(inputBox.value)+10}`;
+            }
+            else if(inputBox.value > 40){
+                finalOrderValue.innerText = `$${inputBox.value}`;
+            }
+        }
+        /*This function for do task when enter button clicked on inputbox*/
+        function actionOnEnter(event){
+            if(event.key === 'Enter'){
+                if(inputBox.value <= 40 && inputBox.value > 0){
+                finalOrderValue.innerText = `$${Number(inputBox.value)+10}`;
+            }
+            else if(inputBox.value > 40){
+                finalOrderValue.innerText = `$${inputBox.value}`;
+            }
+            }
+        }
+    </script>
+
+    <style>
+
+        body{
+            font-family: Arial;
+        }
+        .btn1{
+            background-color: black;
+            color: white;
+            border: none;
+            width: 115px;
+            height:40px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 70px;
+        }
+
+        .inputBox{
+            height: 35px;
+            width:180px;
+        }
+
+        .btn2{
+            height:40px;
+            width:115px;
+            background-color: green;
+            color: white;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+        .is-subscribed{
+            background-color:wheat;
+            color: black;
+        }
+        .finalOrderValue{
+            margin-bottom:70px;
+        }
+    </style>
+</body>
+
+</html>
