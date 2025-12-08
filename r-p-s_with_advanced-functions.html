@@ -1,0 +1,197 @@
+<!--here we going to do the rock paper scissors project by adding advanced function concepts.-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>
+        Rock Paper Scissor Complete Project
+    </title>
+</head>
+
+<body>
+
+    <h1>Rock Paper Scissor Game</h1>
+    <button aria-label="Rock" class="choiceButtons" onclick="play('rock')"><img src="images/rock-emoji.png"
+            alt="rock image" class="images"></button>
+    <button aria-label="Paper" class="choiceButtons" onclick="play('paper')"><img src="images/paper-emoji.png"
+            alt="paper image" class="images"></button>
+    <button aria-label="Scissor" class="choiceButtons" onclick="play('scissors')"><img src="images/scissors-emoji.png"
+            alt="scissor image" class="images"></button>
+
+    <p class="resultText"></p>
+    <p class="choicesMade"></p>
+    <h4 class="scoreText">Wins : 0 | Loses : 0 | Ties : 0</h4>
+
+    <button class="resetButton" onclick="resetScore()">Reset Score</button>
+    <button class="autoPlayButton" onclick="autoplay()">AutoPlay</button>
+
+
+    <style>
+        body {
+            font-family: Arial;
+            background-color: black;
+        }
+
+        h1 {
+            color: rgb(255, 212, 159);
+        }
+
+        h4 {
+            color: beige;
+            font-size: 25px;
+        }
+
+        .images {
+            height: 50px;
+        }
+
+        .choiceButtons {
+            background-color: transparent;
+            cursor: pointer;
+            margin-right: 40px;
+            border: 3px solid whitesmoke;
+            border-radius: 100%;
+            width: 130px;
+            height: 130px;
+        }
+
+
+        .resetButton , 
+        .autoPlayButton {
+            background-color: brown;
+            font-weight: bold;
+            font-size: 20px;
+            color: bisque;
+            border: none;
+            padding: 15px;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .resultText {
+            color: beige;
+            font-size: 25px;
+            margin-top: 60px;
+        }
+
+        .choicesMade {
+            color: beige;
+            font-size: 25px;
+        }
+    </style>
+
+    <script>
+        /*Get resultText paragraph tag to add result in that.*/
+        let resultText = document.querySelector('.resultText');
+
+        /*Get the paragraph tag to display the choices made by player and computer.*/
+        let choicesMade = document.querySelector('.choicesMade');
+
+        /*To show the score of the game.*/
+        let scoreText = document.querySelector('.scoreText');
+
+        let autoPlayButton = document.querySelector(".autoPlayButton");
+
+        let score = JSON.parse(localStorage.getItem('rpsScore')) || {
+            wins: 0,
+            lose: 0,
+            ties: 0
+        };
+
+        function computerMove(){
+
+            let randomNumber = Math.floor(Math.random()*3);
+
+            let computerChoice = ' ';
+
+            if (randomNumber === 0) {
+                computerChoice = 'rock';
+            }
+            else if (randomNumber === 1) {
+                computerChoice = 'paper';
+            }
+            else if (randomNumber === 2) {
+                computerChoice = 'scissors';
+            }
+
+            return computerChoice;
+        }
+
+
+        /*function for playing game buttons*/
+        function play(playerChoice) {
+
+            /*Making a decisions for result*/
+
+            let computerChoice = computerMove();
+
+            if (playerChoice === computerChoice) {
+                resultText.innerText = 'OOPS!. It was a Tie.';
+                score.ties++;
+            }
+            else if (playerChoice === 'rock' && computerChoice === 'scissors'
+                || playerChoice === 'paper' && computerChoice === 'rock'
+                || playerChoice === 'scissor' && computerChoice === 'paper') {
+                resultText.innerText = 'Congrats!. You Win.';
+                score.wins++;
+            }
+            else {
+                resultText.innerText = 'You Lost. Better Luck Next Time.';
+                score.lose++;
+            }
+
+            /*to print the choices made*/
+            choicesMade.innerHTML = `You <img src="images/${playerChoice}-emoji.png" alt="" class="images"> <img src="images/${computerChoice}-emoji.png" alt="" class="images"> Computer`;
+
+            /*to print the score*/
+
+            scoreText.innerText = `Wins : ${score.wins} | Loses : ${score.lose} | Ties : ${score.ties}`;
+
+            /*to make a local storage of the score even in the refresh of the page*/
+
+            localStorage.setItem("rpsScore", JSON.stringify(score));
+
+        }
+
+        /*Function for reseting the button*/
+        function resetScore() {
+            score.wins = 0;
+            score.lose = 0;
+            score.ties = 0;
+
+            /*Removing local storage also to reset the score from zero*/
+            localStorage.removeItem('rpsScore');
+            scoreText.innerText = `Wins : ${score.wins} | Loses : ${score.lose} | Ties : ${score.ties}`;
+        }
+
+        /*Making the autoplay value to false*/
+        let isAutoPlaying = false;
+        let intervalId;
+
+        function autoplay(){
+
+            /*If the autoplay is false it change to true and move to if block.*/
+            if(!isAutoPlaying){
+            intervalId = setInterval(function() {
+                let playerMove = computerMove();
+                play(playerMove);
+            },1000);
+            /*again setting this value to true because to stop the autoplay*/
+            isAutoPlaying = true;
+
+            autoPlayButton.innerText = 'Stop Play';
+            }
+            else{
+                /*clear interval is to remove the interval*/
+                clearInterval(intervalId);
+                isAutoPlaying = false;
+                autoPlayButton.innerText = 'Auto Play';
+            }
+        }
+    </script>
+</body>
+
+</html>

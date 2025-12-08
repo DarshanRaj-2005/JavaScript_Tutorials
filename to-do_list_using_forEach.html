@@ -1,0 +1,119 @@
+<!--To Do List project using arrays and loops.
+ here we combined arrays and objects together to add two or more elements in the single array element.-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        To-Do List Project.
+    </title>
+</head>
+
+<body>
+    <h1>To-Do List</h1>
+
+    <div class="input-div">
+        <input type="text" placeholder="Type To-Do's Here" class="inputBox1">
+        <input type="date" class="inputBox2" placeholder="click date here">
+        <button onclick="pushingElements()" class="addButton">ADD</button>
+    </div>
+
+    <div class="finalList"></div>
+</body>
+<style>
+    body {
+        font-family: Arial;
+    }
+
+    .input-div,
+    .finalList {
+        display: grid;
+        grid-template-columns: 200px 150px 100px;
+        column-gap: 15px;
+        row-gap: 15px;
+        align-items: center;
+    }
+
+    .input-div {
+        margin-bottom: 15px;
+        align-items: stretch;
+    }
+
+    .inputBox1 {
+        padding: 15px 30px;
+        font-size: 15px;
+    }
+
+    .inputBox2 {
+        padding: 15px 15px;
+        font-size: 16px;
+    }
+
+    .addButton {
+        background-color: green;
+        color: white;
+        border: none;
+        font-size: 15px;
+    }
+
+    .deleteButton {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        font-size: 15px;
+    }
+</style>
+
+<script>
+    /*Get the variales from the html*/
+    let nameInput = document.querySelector(".inputBox1");
+    let finalList = document.querySelector(".finalList");
+    let dateInput = document.querySelector(".inputBox2");
+
+    /*Create empty array to store the values in that*/
+    let arr = [];
+
+    /*Pushing the values into the array. Here we pushing the objects to insert two elements at one.*/
+    function pushingElements() {
+        arr.push({
+            name: nameInput.value,
+            date: dateInput.value
+        });
+
+        /*Making the inputBox to null to type new in inputbox.*/
+        nameInput.value = '';
+        dateInput.value = '';
+
+        /*Calling the function to display the elements*/
+        displayingElements();
+    }
+
+    function displayingElements() {
+        /*Created empty string to store the previous elements also in the screen.*/
+        let toDo = '';
+
+        arr.forEach(function(toDoObjects,index){
+            let { name, date } = toDoObjects;
+
+            /*Creating html tags to print the elements one by one*/
+            let Html = `
+            <div>
+                ${name}
+            </div>    
+            <div>
+                 ${date}
+            </div>
+                <button onclick = "arr.splice(${index},1);
+                displayingElements(); 
+                " class="deleteButton">Delete</button>`;
+            /*Adding the elements at the empty string to store the previous values also*/
+            toDo += Html;
+        });
+        finalList.innerHTML = toDo;
+    }
+</script>
+
+</html>
