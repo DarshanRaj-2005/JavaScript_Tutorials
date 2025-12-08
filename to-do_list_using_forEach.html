@@ -17,7 +17,7 @@
     <div class="input-div">
         <input type="text" placeholder="Type To-Do's Here" class="inputBox1">
         <input type="date" class="inputBox2" placeholder="click date here">
-        <button onclick="pushingElements()" class="addButton">ADD</button>
+        <button class="addButton">ADD</button>
     </div>
 
     <div class="finalList"></div>
@@ -73,6 +73,11 @@
     let finalList = document.querySelector(".finalList");
     let dateInput = document.querySelector(".inputBox2");
 
+    let addButton = document.querySelector(".addButton").addEventListener('click', () => {
+        pushingElements();
+    });
+
+
     /*Create empty array to store the values in that*/
     let arr = [];
 
@@ -95,7 +100,7 @@
         /*Created empty string to store the previous elements also in the screen.*/
         let toDo = '';
 
-        arr.forEach(function(toDoObjects,index){
+        arr.forEach((toDoObjects, index) => {
             let { name, date } = toDoObjects;
 
             /*Creating html tags to print the elements one by one*/
@@ -106,13 +111,22 @@
             <div>
                  ${date}
             </div>
-                <button onclick = "arr.splice(${index},1);
-                displayingElements(); 
-                " class="deleteButton">Delete</button>`;
+                <button
+                // onclick = "arr.splice(${index},1);
+                // displayingElements(); 
+                 class="deleteButton">Delete</button>`;
             /*Adding the elements at the empty string to store the previous values also*/
             toDo += Html;
         });
         finalList.innerHTML = toDo;
+
+        document.querySelectorAll(".deleteButton")
+            .forEach((deleteButton, index) => {
+                deleteButton.addEventListener('click', () => {
+                    arr.splice(index, 1);
+                    displayingElements();
+                });
+            });
     }
 </script>
 
