@@ -12,7 +12,10 @@ let promise  = new Promise((resolve) => {
 /*then wait until the resolve called. So easy to work on nested asynchronous code*/
 promise.then(()=>{
     console.log('step 3');
-})
+}).catch(()=>{
+    console.log('Unexpected error. Please try again');
+});
+//catch is to handle the error in the promise.
 
 /* OUTPUT 
     step 1
@@ -34,4 +37,7 @@ then((response)=>{
 .then((products)=>{
     //after converting the data printing it
     console.log(products);
+})
+.catch(()=>{
+    console.log(error);
 })

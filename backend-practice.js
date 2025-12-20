@@ -13,6 +13,11 @@ let xhr = new XMLHttpRequest(); /*Create a new HTTP message
 /*Now event listener will wait until the response load after that
  it will print.*/
 
+ //we can handle the error in response
+
+ xhr.addEventListener('error',()=>{
+   console.log('Unexpected error. Please try again');
+ });
 
 
  xhr.open('GET', 'url link'); /*GET is to get data*/
